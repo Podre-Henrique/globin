@@ -20,22 +20,22 @@ const (
 	PORT = "8000"
 )
 
-type URLDTO struct {
+type URL struct {
 	Original  string `json:"original,omitempty"`
-	Shortened string `json:"shortened"`
+	ShortURL string `json:"url"`
 }
 
-type URL struct {
+type URLDB struct {
 	Original string
 	start    uint32
 }
 
 type DB struct {
-	URLs map[string]URL
+	URLs map[string]URLDB
 	sync.RWMutex
 }
 
-var db = DB{URLs: map[string]URL{}}
+var db = DB{URLs: map[string]URLDB{}}
 
 func deleteExpiredURLs() {
 	db.Lock()
@@ -64,17 +64,17 @@ func GC() {
 	}()
 }
 
-func (u *URLDTO) storeURL(shortened string) bool {
+func (u *URL) storeURL(shortened string) bool {
 	if _, exists := db.URLs[shortened]; exists {
 		return false
 	}
-	db.URLs[shortened] = URL{u.Original, ts.Timestamp()}
-	u.Shortened = shortened
+	db.URLs[shortened] = URLDB{u.Original, ts.Timestamp()}
+	u.ShortURL = shortened
 	u.Original = ""
 	return true
 }
 
-func (u *URLDTO) generateShortURL() {
+func (u *URL) generateShortURL() {
 	result := make([]byte, URL_LEN)
 	db.RLock()
 	defer db.RUnlock()
@@ -118,7 +118,7 @@ func main() {
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		var urlDTO URLDTO
+		var urlDTO URL
 		if err := c.Bind().Body(&urlDTO); err != nil {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
