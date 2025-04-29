@@ -102,7 +102,7 @@ func main() {
 	GC()
 	app := fiber.New(fiber.Config{
 		// ServerHeader:                 "MY SHORTENER",
-		BodyLimit:                    4096,
+		BodyLimit:                    256,
 		Immutable:                    true,
 		CaseSensitive:                true,
 		Concurrency:                  333,
@@ -117,7 +117,7 @@ func main() {
 		Max: 34,
 	}))
 
-	app.Get("/", func(c fiber.Ctx) error {
+	app.Post("/", func(c fiber.Ctx) error {
 		var urlDTO URL
 		if err := c.Bind().Body(&urlDTO); err != nil {
 			return c.SendStatus(fiber.StatusBadRequest)

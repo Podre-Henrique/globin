@@ -8,6 +8,7 @@ A high-performance URL shortener service written in Go using Fiber framework.
 - URL validation
 - Auto-expiring URLs
 - Rate limiting
+- Thread-safe operations
 
 ## Technical Details
 
@@ -20,34 +21,41 @@ A high-performance URL shortener service written in Go using Fiber framework.
 
 ### Shorten URL
 ```http
-GET /
+POST /
 Content-Type: application/json
 
 {
-    "original": "https://your-long-url.com/..."
+    "original": "https://something.com.cu/awid?p=2&..."
 }
 ```
 
 Response:
 ```json
 {
-    "shortened": "abc123"
+    "url": <url>
 }
 ```
 
 ### Access Shortened URL
 ```http
-GET /:shortened
+GET /<url>
 ```
 Redirects to the original URL if valid and not expired.
 
-## Configuration
+## Examples using curl
 
-Main constants:
-- `URL_LIFETIME`: 3 hours
-- `GC_INTERVAL`: 30 minutes
-- `URL_LEN`: 6 characters
-- Default port: 8000
+### Create short URL:
+```bash
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d '{"original":"https://www.pudim.com.br"}' \
+     http://localhost:8000/
+```
+Then copy the shortened URL from the response.
+### Access shortened URL:
+```bash
+curl -L http://localhost:8000/ <-paste_here
+```
 
 ## Running the Project
 
