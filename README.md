@@ -68,5 +68,3 @@ go mod download
 ```bash
 go run main.go
 ```
-
-The server will start at `localhost:8000`
