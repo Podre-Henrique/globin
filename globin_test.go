@@ -94,8 +94,7 @@ func TestRedirectURL(t *testing.T) {
 
 		resp, err := app.Test(req)
 		assert.NoError(t, err)
-		// assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 }
 
