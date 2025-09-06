@@ -3,8 +3,6 @@ name: globin
 on:
   push:
     branches: [ "main" ]
-  schedule:
-    - cron: "0 0 */5 * *" 
 
 jobs:
   test:
