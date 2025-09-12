@@ -151,7 +151,7 @@ func setupApp() *fiber.App {
 		if !exists {
 			return c.SendStatus(fiber.StatusNotFound)
 		}
-		return c.Redirect().To(url.Original)
+		return c.Redirect().Status(fiber.StatusMovedPermanently).To(url.Original)
 	})
 	return app
 }

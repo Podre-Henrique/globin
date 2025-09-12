@@ -69,7 +69,7 @@ func TestRedirectURL(t *testing.T) {
 
 		resp, err := app.Test(req)
 		assert.NoError(t, err)
-		assert.Equal(t, http.StatusFound, resp.StatusCode)
+		assert.Equal(t, http.StatusMovedPermanently, resp.StatusCode)
 		assert.Equal(t, originalURL, resp.Header.Get("Location"))
 	})
 
