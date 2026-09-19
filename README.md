@@ -56,13 +56,6 @@ Then copy the shortened URL from the response.
 ```bash
 curl -L http://localhost:8000/ <-paste_here
 ```
-
-## Running the Project
-
-1. Clone the repository
-2. Install dependencies:
-```bash
-go mod download
 ```
 3. Run the server:
 ```bash
