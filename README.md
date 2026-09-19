@@ -56,8 +56,3 @@ Then copy the shortened URL from the response.
 ```bash
 curl -L http://localhost:8000/ <-paste_here
 ```
-```
-3. Run the server:
-```bash
-go run main.go
-```
